@@ -219,6 +219,8 @@ textarea:focus{border-color:var(--blue);background:var(--surface)}
 .login input:focus{border-color:var(--blue);background:var(--surface)}
 .login .btn{flex:0 0 86px;height:54px}
 .stack{display:flex;flex-direction:column;gap:12px;padding-bottom:calc(40px + env(safe-area-inset-bottom))}
+.sync{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:rgba(255,255,255,.75);margin-bottom:-2px}
+.sync-out{font-size:12px;font-weight:600;color:#fff;padding:5px 12px;border-radius:999px;background:rgba(255,255,255,.14)}
 .tabs{display:flex;flex-wrap:wrap;gap:6px;padding:2px 0 4px}
 .tabs::-webkit-scrollbar{display:none}
 .tab{padding:9px 14px;border-radius:999px;background:var(--surface);font-size:14px;font-weight:600;color:var(--sub);box-shadow:0 4px 12px -8px rgba(22,56,143,.35);transition:.18s var(--ease)}
@@ -430,6 +432,7 @@ textarea{min-height:140px}
       </div>
 
       <div id="result" class="stack lift" hidden>
+        <div class="sync"><span class="num" id="syncTime"></span><button class="sync-out" id="btnLogout">로그아웃</button></div>
         <div class="tabs" id="tabs"></div>
         <dl class="kpis">
           <div class="kpi"><dt>응답</dt><dd class="num" id="kN"></dd></div>
@@ -626,16 +629,31 @@ async function submit(){
 }
 
 /* ===== 관리자 ===== */
-let RESULT=null, tabIdx=0, pwSaved='';
-$('loginForm').addEventListener('submit',e=>{ e.preventDefault(); loadResult($('pw').value.trim()); });
-$('btnReload').onclick=()=>loadResult(pwSaved,true);
+let RESULT=null, tabIdx=0, pwSaved='', autoTimer=null, loading=false;
+const PW_KEY='baekryeon-admin-pw';
+const AUTO_MS=30000;
+function savePw(v){ try{ v?localStorage.setItem(PW_KEY,v):localStorage.removeItem(PW_KEY); }catch(e){} }
+function readPw(){ try{ return localStorage.getItem(PW_KEY)||''; }catch(e){ return ''; } }
 
-async function loadResult(pw,reload){
+$('loginForm').addEventListener('submit',e=>{ e.preventDefault(); loadResult($('pw').value.trim(),'login'); });
+$('btnReload').onclick=()=>loadResult(pwSaved,'manual');
+$('btnLogout').onclick=()=>{
+  savePw(''); pwSaved=''; RESULT=null; clearInterval(autoTimer); autoTimer=null;
+  $('result').hidden=true; $('loginCard').hidden=false; $('pw').value=''; toast('로그아웃');
+};
+
+async function loadResult(pw,mode){
+  if(loading) return; loading=true;
   try{
     if(API_URL){
       const r = await fetch(`${API_URL}?action=summary&pw=${encodeURIComponent(pw)}`);
       const j = await r.json();
-      if(!j.ok){ toast(j.error==='password'?'비밀번호 불일치':'불러오기 실패'); return; }
+      if(!j.ok){
+        if(j.error==='password'){ savePw(''); $('result').hidden=true; $('loginCard').hidden=false; if(mode!=='auto') toast('비밀번호 불일치'); }
+        else if(mode!=='auto') toast('불러오기 실패');
+        if(!RESULT) $('loginCard').hidden=false;
+        return;
+      }
       RESULT=j.classes;
     }else{
       RESULT = CLASSES.map(c=>{
@@ -643,13 +661,20 @@ async function loadResult(pw,reload){
         const counts=[0,1,2,3,4].map(q=>[1,2,3,4,5].map(v=>rows.filter(r=>r.answers[q]===v).length));
         return {name:n,n:rows.length,counts,comments:rows.filter(r=>r.comment).map(r=>({t:r.t.toTimeString().slice(0,5),text:r.comment}))};
       });
-      if(!reload) toast('미리보기 모드');
+      if(mode==='login') toast('미리보기 모드');
     }
-    pwSaved=pw; $('loginCard').hidden=true; $('result').hidden=false;
-    renderTabs(); renderResult(); renderQR();
-    if(reload) toast('새로고침 완료');
-  }catch(err){ toast('불러오기 실패'); }
+    const first = !pwSaved;
+    pwSaved=pw; savePw(pw);
+    $('loginCard').hidden=true; $('result').hidden=false;
+    renderTabs(); renderResult(); if(first) renderQR();
+    const now=new Date();
+    $('syncTime').textContent=`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')} 갱신 · 30초 자동`;
+    if(!autoTimer) autoTimer=setInterval(()=>{ if(!document.hidden && location.hash==='#admin' && pwSaved) loadResult(pwSaved,'auto'); },AUTO_MS);
+    if(mode==='manual') toast('새로고침 완료');
+  }catch(err){ if(mode!=='auto') toast('불러오기 실패'); if(!RESULT) $('loginCard').hidden=false; }
+  finally{ loading=false; }
 }
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden && location.hash==='#admin' && pwSaved) loadResult(pwSaved,'auto'); });
 
 function totalData(){
   const counts=[0,1,2,3,4].map(()=>[0,0,0,0,0]); let n=0; const comments=[];
@@ -750,7 +775,10 @@ function renderQR(){
 }
 
 /* 라우팅: 주소 끝 #admin → 관리자 화면 */
-function route(){ if(location.hash==='#admin') show('admin'); else { renderClasses(); show('intro'); } }
+function route(){
+  if(location.hash==='#admin'){ show('admin'); const sp=readPw(); if(sp && !RESULT){ $('loginCard').hidden=true; loadResult(sp,'restore'); } }
+  else { renderClasses(); show('intro'); }
+}
 window.addEventListener('hashchange',route);
 route();
 </script>
