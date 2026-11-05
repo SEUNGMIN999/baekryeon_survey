@@ -4,7 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#16388f">
-<title>백련유치원 학부모 인식조사</title>
+<title>목포백련유치원 보호자 인식조사</title>
+<meta name="description" content="2026년 유아중심 방과후 특색 프로그램 활성화 사업 · 6문항 · 약 1분">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://seungmin999.github.io/baekryeon_survey/">
+<meta property="og:title" content="목포백련유치원 보호자 인식조사">
+<meta property="og:description" content="2026년 유아중심 방과후 특색 프로그램 활성화 사업 · 6문항 · 약 1분">
+<meta property="og:image" content="https://seungmin999.github.io/baekryeon_survey/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <link rel="icon" id="fav">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>
@@ -97,7 +105,7 @@ img{user-select:none;-webkit-user-drag:none}
 .cls-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .cls{
   position:relative;background:var(--surface);border:1.5px solid transparent;border-radius:20px;
-  padding:16px 6px 14px;display:flex;flex-direction:column;align-items:center;gap:2px;
+  padding:22px 6px 20px;display:flex;flex-direction:column;align-items:center;gap:4px;
   box-shadow:0 6px 16px -10px rgba(22,56,143,.3);
   transition:transform .2s var(--ease),box-shadow .2s var(--ease),border-color .2s var(--ease);
 }
@@ -126,7 +134,7 @@ img{user-select:none;-webkit-user-drag:none}
 .s-row{display:flex;align-items:center;justify-content:space-between;gap:12px;height:40px}
 .back{display:inline-flex;align-items:center;gap:4px;font-size:14px;font-weight:600;color:rgba(255,255,255,.85);height:40px;padding-right:8px}
 .back svg{width:18px;height:18px}
-.chip{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;background:rgba(255,255,255,.14);padding:5px 12px 5px 6px;border-radius:999px}
+.chip{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;background:rgba(255,255,255,.14);padding:5px 14px;border-radius:999px}
 .chip .av{width:26px;height:26px;margin:0;background:#fff!important}
 .seg{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;margin-top:12px}
 .seg i{height:6px;border-radius:3px;background:rgba(255,255,255,.18);transition:background .3s var(--ease)}
@@ -195,7 +203,7 @@ textarea:focus{border-color:var(--blue);background:var(--surface)}
 @keyframes draw{to{stroke-dashoffset:0}}
 .done-box h1{font-size:30px;font-weight:800;letter-spacing:-.04em;margin:0;color:var(--navy)}
 .done-box p{color:var(--sub);margin:8px 0 0;font-size:16px}
-.done-cls{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-size:14px;font-weight:700;background:var(--surface);padding:6px 14px 6px 6px;border-radius:999px;box-shadow:0 6px 16px -10px rgba(22,56,143,.35)}
+.done-cls{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-size:14px;font-weight:700;background:var(--surface);padding:6px 16px;border-radius:999px;box-shadow:0 6px 16px -10px rgba(22,56,143,.35)}
 .done-cls .av{width:30px;height:30px;margin:0}
 .done-actions{width:100%;margin-top:40px}
 .done-actions .btn{width:100%}
@@ -211,11 +219,11 @@ textarea:focus{border-color:var(--blue);background:var(--surface)}
 .login input:focus{border-color:var(--blue);background:var(--surface)}
 .login .btn{flex:0 0 86px;height:54px}
 .stack{display:flex;flex-direction:column;gap:12px;padding-bottom:calc(40px + env(safe-area-inset-bottom))}
-.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 0 4px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;padding:2px 0 4px}
 .tabs::-webkit-scrollbar{display:none}
 .tab{padding:9px 14px;border-radius:999px;background:var(--surface);font-size:14px;font-weight:600;color:var(--sub);box-shadow:0 4px 12px -8px rgba(22,56,143,.35);transition:.18s var(--ease)}
 .tab .n{font-size:12px;color:var(--mute);margin-left:5px}
-.tab.on{background:var(--navy);color:#fff}
+.tab.on{background:var(--pink);color:#fff;box-shadow:0 6px 14px -6px rgba(232,25,127,.6)}
 .tab.on .n{color:rgba(255,255,255,.65)}
 .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .kpi{border-radius:18px;padding:14px 14px}
@@ -283,6 +291,38 @@ tr:last-child td{border-bottom:0}
 .spin{width:20px;height:20px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
 @media (min-width:600px){.title{font-size:32px}.qtext{font-size:22px}}
+/* 설문 화면: 한 화면 맞춤 + 하단 고정 버튼 */
+.s-top{padding-block:calc(6px + env(safe-area-inset-top)) 12px}
+.s-row{height:36px}
+.seg{margin-top:8px}
+.q-wrap{padding-block:14px 0}
+.q-card{padding:18px 16px 16px}
+.q-count .cur{min-width:28px;height:28px;font-size:14px}
+.qtext{font-size:18px;margin:10px 0 14px}
+.opts{gap:7px}
+.opt{height:50px}
+.opt .n{width:32px;height:32px;border-radius:10px;font-size:14px}
+textarea{min-height:140px}
+#v-survey .nav{position:sticky;bottom:0;z-index:4;margin-top:0;padding-block:12px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(to bottom,rgba(242,245,251,0),var(--bg) 28%)}
+#v-survey .btn{height:54px}
+@media (min-height:800px){.opt{height:56px}.qtext{font-size:19px;margin:12px 0 18px}.opts{gap:8px}}
+@media (min-width:600px){.qtext{font-size:21px}}
+.cols,.col{display:contents}
+@media (min-width:960px){
+  #v-admin .inner{max-width:1200px;padding-left:max(40px,env(safe-area-inset-left));padding-right:max(40px,env(safe-area-inset-right))}
+  #v-admin .admin-hero{padding-block:calc(32px + env(safe-area-inset-top)) 96px}
+  #v-admin .title{font-size:38px}
+  #v-admin #loginCard{max-width:460px}
+  #result{gap:16px}
+  .tab{padding:10px 18px;font-size:15px}
+  .kpis{gap:16px}
+  .kpi{padding:20px 24px}
+  .kpi dd{font-size:34px}
+  .cols{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px;align-items:start}
+  .col{display:flex;flex-direction:column;gap:16px;min-width:0}
+  .panel{padding:26px 28px}
+  .cmp td,.cmp th{padding:10px 6px}
+}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.burst .ring path{stroke-dashoffset:0}}
 </style>
 </head>
@@ -291,21 +331,19 @@ tr:last-child td{border-bottom:0}
   <!-- 첫 화면 -->
   <section id="v-intro" class="view">
     <div class="hero">
-      <span class="deco d1"></span><span class="deco d2"></span><span class="deco d3"></span>
-      <span class="deco d4"></span><span class="deco d5"></span><span class="deco d6"></span>
       <div class="inner">
         <header class="mast">
-          <span class="logo-tile"><img data-logo alt="백련유치원 로고"></span>
-          <div><div class="mast-name">백련유치원</div><div class="mast-sub">방과후과정</div></div>
+          <span class="logo-tile"><img data-logo alt="목포백련유치원 로고"></span>
+          <div><div class="mast-name">목포백련유치원</div><div class="mast-sub">방과후과정</div></div>
         </header>
-        <span class="badge">학부모 인식조사</span>
+        <span class="badge">보호자 인식조사</span>
         <h1 class="title">2026년 유아중심 방과후 특색 프로그램 <span class="hl">활성화 사업</span></h1>
       </div>
     </div>
 
     <div class="inner">
       <div class="card lift">
-        <p class="lead">우리 유치원은 2026년 교육부에서 국가시책 특별교부금 사업으로 지원하는 유아중심 방과후 특색 프로그램(<b>'다온누리 프로그램'</b>) 활성화 사업을 운영하였습니다. 다음은 사업 운영과 관련된 인식조사에 대한 질문이오니, 각 항목에 대하여 학부모님의 생각과 일치하는 번호를 선택해 주십시오.</p>
+        <p class="lead">우리 유치원은 2026년 교육부에서 국가시책 특별교부금 사업으로 지원하는 유아중심 방과후 특색 프로그램(<b>'다온누리 프로그램'</b>) 활성화 사업을 운영하였습니다. 다음은 사업 운영과 관련된 인식조사에 대한 질문이오니, 각 항목에 대하여 보호자님의 생각과 일치하는 번호를 선택해 주십시오.</p>
         <dl class="facts">
           <div class="fact"><dt>문항</dt><dd class="num">6개</dd></div>
           <div class="fact"><dt>소요 시간</dt><dd class="num">약 1분</dd></div>
@@ -319,7 +357,7 @@ tr:last-child td{border-bottom:0}
       </div>
       <div id="classGrid"></div>
 
-      <div class="foot"><img data-logo alt="">백련유치원</div>
+      <div class="foot"><img data-logo alt="">목포백련유치원</div>
     </div>
   </section>
 
@@ -365,22 +403,20 @@ tr:last-child td{border-bottom:0}
       <div class="done-actions">
         <button class="btn ghost" id="btnAnother">다른 반 자녀 응답</button>
       </div>
-      <img class="done-logo" data-logo alt="백련유치원 로고">
+      <img class="done-logo" data-logo alt="목포백련유치원 로고">
     </div>
   </section>
 
   <!-- 관리자 -->
   <section id="v-admin" class="view" hidden>
     <div class="hero admin-hero">
-      <span class="deco d1"></span><span class="deco d2"></span><span class="deco d3"></span>
-      <span class="deco d4"></span><span class="deco d5"></span>
       <div class="inner">
         <header class="mast">
-          <span class="logo-tile"><img data-logo alt="백련유치원 로고"></span>
-          <div><div class="mast-name">백련유치원</div><div class="mast-sub">관리자</div></div>
+          <span class="logo-tile"><img data-logo alt="목포백련유치원 로고"></span>
+          <div><div class="mast-name">목포백련유치원</div><div class="mast-sub">관리자</div></div>
         </header>
         <span class="badge">결과 집계</span>
-        <h1 class="title">학부모 인식조사 결과</h1>
+        <h1 class="title">보호자 인식조사 결과</h1>
       </div>
     </div>
 
@@ -400,6 +436,8 @@ tr:last-child td{border-bottom:0}
           <div class="kpi"><dt>평균 긍정률</dt><dd class="num" id="kP"></dd></div>
           <div class="kpi"><dt>소감</dt><dd class="num" id="kC"></dd></div>
         </dl>
+        <div class="cols">
+        <div class="col">
         <div class="panel">
           <h2 class="panel-title"><span id="rTitle"></span><small>긍정 = ① + ②</small></h2>
           <div class="items" id="items"></div>
@@ -413,6 +451,8 @@ tr:last-child td{border-bottom:0}
           <div class="cmp-text" id="cmpText"></div>
           <div class="tbl-wrap"><table class="cmp" id="cmpTbl"></table></div>
         </div>
+        </div>
+        <div class="col">
         <div class="panel">
           <h2 class="panel-title">응답수 표
             <span class="tools"><button class="tool" id="btnCopy">표 복사</button><button class="tool" id="btnReload">새로고침</button></span>
@@ -433,6 +473,8 @@ tr:last-child td{border-bottom:0}
             </div>
           </div>
         </div>
+        </div>
+        </div>
       </div>
     </div>
   </section>
@@ -447,7 +489,7 @@ document.getElementById('fav').href=LOGO;
 </script>
 <script>
 /* ===== 설정: Apps Script 웹 앱 URL 붙여넣기 ===== */
-const API_URL = 'https://script.google.com/macros/s/AKfycbxc1yHWbVvX6fXFgf5ffvrh6f7blwQsRAlirLvLgWeWp2pCnnuq3UQQhWyqwge1l9MyBw/exec';
+const API_URL = '';
 /* ============================================== */
 
 const CLASSES = [
@@ -488,7 +530,7 @@ const FLOWERS={
      [[14,27,.75],[24,16,1]].map(([x,y,k])=>`<g transform="translate(${x-20*k} ${y-20*k}) scale(${k})">${P(4,3.6,8,8,'#f6c400',20)}${P(4,1.6,5,6,'#ffe066',20)}${C(2.4,'#d99a00')}</g>`).join('')),
   '무궁화':SV(P(5,7.2,8.4,7.6,'#f6a9c8')+P(5,.5,6,9,'#e05a92',0,'opacity=".5"')+P(5,2.6,4.2,4.4,'#c2185b')+C(3,'#c2185b')+`<line x1="20" y1="20" x2="20" y2="10" stroke="#fff6f9" stroke-width="1.6" stroke-linecap="round"/><circle cx="20" cy="9.6" r="1.6" fill="#ffe27a"/>`)
 };
-const avatar = name => `<span class="av">${FLOWERS[name.slice(0,3)]||''}</span>`;
+const avatar = () => '';
 let state = { cls:null, step:0, answers:[0,0,0,0,0] };
 let demo = [];
 
