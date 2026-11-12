@@ -220,7 +220,63 @@ textarea:focus{border-color:var(--blue);background:var(--surface)}
 .login .btn{flex:0 0 86px;height:54px}
 .stack{display:flex;flex-direction:column;gap:12px;padding-bottom:calc(40px + env(safe-area-inset-bottom))}
 .sync{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:rgba(255,255,255,.75);margin-bottom:-2px}
-.sync-out{font-size:12px;font-weight:600;color:#fff;padding:5px 12px;border-radius:999px;background:rgba(255,255,255,.14)}
+.sync{flex-wrap:wrap}
+.sync-act{display:flex;gap:6px;flex-wrap:wrap}
+.sync-out{font-size:12px;font-weight:600;color:#fff;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.14);transition:background .18s}
+.sync-out:hover{background:rgba(255,255,255,.24)}
+.sync-out.main{background:#fff;color:var(--navy)}
+.sync-out:disabled{opacity:.5;cursor:default}
+/* 인쇄 · PDF 레이아웃 (A4) */
+#printArea{position:fixed;left:-10000px;top:0;width:794px;background:#fff;color:#131a2c;font-family:var(--font);letter-spacing:-.01em}
+#printArea .pg{width:794px;padding:44px 46px 30px;box-sizing:border-box;background:#fff}
+#printArea .ph{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;border-bottom:3px solid var(--navy);padding-bottom:12px}
+#printArea .pk{font-size:11px;color:var(--sub);font-weight:600}
+#printArea h2{margin:4px 0 0;font-size:24px;font-weight:800;letter-spacing:-.03em;color:var(--navy)}
+#printArea h2 em{font-style:normal;color:var(--pink);margin-left:6px}
+#printArea .pd{font-size:11px;color:var(--sub);white-space:nowrap}
+#printArea .pkpi{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0 2px}
+#printArea .pkpi div{border:1px solid #d8deea;border-radius:10px;padding:8px 14px}
+#printArea .pkpi span{font-size:11px;color:var(--sub);font-weight:600}
+#printArea .pkpi b{display:block;font-size:22px;font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums}
+#printArea .pkpi small{font-size:12px;margin-left:2px;color:var(--sub);font-weight:600}
+#printArea h3{font-size:14px;margin:16px 0 7px;font-weight:800}
+#printArea h3 small{font-weight:600;color:var(--sub);font-size:11px;margin-left:4px}
+#printArea .ptab{width:100%;border-collapse:collapse;font-size:12px}
+#printArea .ptab th{background:#eef2f9;color:#384260;font-size:10.5px;font-weight:700;padding:7px 4px;border:1px solid #d8deea;line-height:1.35}
+#printArea .ptab th small{font-weight:500;font-size:9.5px}
+#printArea .ptab td{border:1px solid #d8deea;padding:6px 5px;text-align:center;vertical-align:middle}
+#printArea .ptab .pq{width:24px;color:var(--navy);font-weight:800}
+#printArea .ptab .pt{text-align:left;line-height:1.45}
+#printArea .pbar{display:flex;height:6px;border-radius:3px;overflow:hidden;background:#eef2f9;margin-top:5px;gap:1px}
+#printArea .pbar i{display:block;height:100%}
+#printArea .ptab .pn{width:54px;font-weight:700;font-variant-numeric:tabular-nums}
+#printArea .ptab .pn small{display:block;font-size:9.5px;color:var(--sub);font-weight:500}
+#printArea .ptab .ps{background:#f7f9fc}
+#printArea .ptab .pp{color:var(--navy);font-weight:800}
+#printArea .pcls td{font-variant-numeric:tabular-nums;padding:5px 4px}
+#printArea .pcls .pl{text-align:left;font-weight:700}
+#printArea .pcls .ptot td{background:#eef2f9;font-weight:800}
+#printArea .plg{display:flex;flex-wrap:wrap;gap:10px;font-size:10px;color:var(--sub);margin-top:8px;align-items:center}
+#printArea .plg span{display:inline-flex;align-items:center;gap:4px}
+#printArea .plg i{width:8px;height:8px;border-radius:2px;display:inline-block}
+#printArea .plg .pnote{margin-left:auto}
+#printArea .pcm{margin:0;padding:0;list-style:none;font-size:12px;line-height:1.6}
+#printArea .pcm li{display:flex;gap:10px;padding:5px 0;border-bottom:1px dashed #d8deea;white-space:pre-wrap}
+#printArea .pcm li b{flex:none;width:18px;color:var(--navy);font-variant-numeric:tabular-nums}
+#printArea .pcm li p{margin:0;flex:1;min-width:0}
+#printArea .pcm li span{flex:none;color:var(--sub);font-size:10.5px;padding-top:1px;font-variant-numeric:tabular-nums}
+#printArea .pempty{font-size:12px;color:var(--sub);margin:0}
+#printArea .pf{margin-top:14px;font-size:10px;color:var(--mute);text-align:right}
+@media print{
+  @page{size:A4 portrait;margin:12mm}
+  html,body{background:#fff!important}
+  body>*:not(#printArea){display:none!important}
+  #printArea{position:static;left:auto;width:auto}
+  #printArea .pg{width:auto;padding:0;break-after:page;page-break-after:always}
+  #printArea .pg:last-child{break-after:auto;page-break-after:auto}
+  #printArea .ptab tr{break-inside:avoid}
+  #printArea *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
 .tabs{display:flex;flex-wrap:wrap;gap:6px;padding:2px 0 4px}
 .tabs::-webkit-scrollbar{display:none}
 .tab{padding:9px 14px;border-radius:999px;background:var(--surface);font-size:14px;font-weight:600;color:var(--sub);box-shadow:0 4px 12px -8px rgba(22,56,143,.35);transition:.18s var(--ease)}
@@ -432,7 +488,7 @@ textarea{min-height:140px}
       </div>
 
       <div id="result" class="stack lift" hidden>
-        <div class="sync"><span class="num" id="syncTime"></span><button class="sync-out" id="btnLogout">로그아웃</button></div>
+        <div class="sync"><span class="num" id="syncTime"></span><div class="sync-act"><button class="sync-out main" id="btnPrint">인쇄</button><button class="sync-out main" id="btnPdf">PDF 저장</button><button class="sync-out main" id="btnXlsx">엑셀 저장</button><button class="sync-out" id="btnLogout">로그아웃</button></div></div>
         <div class="tabs" id="tabs"></div>
         <dl class="kpis">
           <div class="kpi"><dt>응답</dt><dd class="num" id="kN"></dd></div>
@@ -483,6 +539,7 @@ textarea{min-height:140px}
   </section>
 
 <div class="toast" id="toast"></div>
+<div id="printArea" aria-hidden="true"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
@@ -492,7 +549,7 @@ document.getElementById('fav').href=LOGO;
 </script>
 <script>
 /* ===== 설정: Apps Script 웹 앱 URL 붙여넣기 ===== */
-const API_URL = 'https://script.google.com/macros/s/AKfycbzYLL5ri7FlVkloKeK27WWAduLe4jb0u0O0huCJrnIbucMqGl59Tra6j5ookWQ8ay8HBg/exec';
+const API_URL = '';
 /* ============================================== */
 
 const CLASSES = [
@@ -765,6 +822,123 @@ $('btnCopyAll').onclick=async()=>{
   const txt=blocks.join('\n\n');
   try{ await navigator.clipboard.writeText(txt); toast('전체 반 표 복사 완료'); }
   catch(e){ const ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy'); toast('전체 반 표 복사 완료');}catch(_){toast('복사 실패');} ta.remove(); }
+};
+
+/* ===== 인쇄 · 저장 ===== */
+const LIBS={
+  h2c:'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
+  jspdf:'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',
+  xlsx:'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js'
+};
+const libCache={};
+function loadLib(k){
+  if(libCache[k]) return libCache[k];
+  libCache[k]=new Promise((res,rej)=>{ const sc=document.createElement('script'); sc.src=LIBS[k]; sc.onload=res; sc.onerror=()=>{ libCache[k]=null; rej(new Error(k)); }; document.head.appendChild(sc); });
+  return libCache[k];
+}
+function stamp(){ const d=new Date(), p=n=>String(n).padStart(2,'0'); return {date:`${d.getFullYear()}.${p(d.getMonth()+1)}.${p(d.getDate())}`,time:`${p(d.getHours())}:${p(d.getMinutes())}`,file:`${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}`}; }
+const sumRow = r => r.reduce((a,b)=>a+b,0);
+const posRate = r => { const t=sumRow(r); return t ? pct(r[0]+r[1],t) : null; };
+const avgPos = d => d.n ? Math.round(d.counts.reduce((a,r)=>a+(posRate(r)||0),0)/5) : null;
+const fmtP = v => v==null ? '-' : v+'%';
+
+function pageHTML(d,isTotal,st){
+  const avg=avgPos(d);
+  const rows=d.counts.map((r,q)=>{
+    const t=sumRow(r);
+    const bar=t?r.map((v,i)=>v?`<i style="width:${v/t*100}%;background:${SCALE_COLORS[i]}"></i>`:'').join(''):'';
+    return `<tr><td class="pq">${q+1}</td><td class="pt">${esc(ITEMS[q])}<div class="pbar">${bar}</div></td>${r.map(v=>`<td class="pn">${v}<small>${t?pct(v,t)+'%':''}</small></td>`).join('')}<td class="pn ps">${t}</td><td class="pn pp">${fmtP(posRate(r))}</td></tr>`;
+  }).join('');
+  let extra;
+  if(isTotal){
+    extra=`<h3>반별 응답 현황</h3><table class="ptab pcls"><thead><tr><th>반</th><th>응답</th>${[1,2,3,4,5].map(q=>`<th>문항 ${q}<br><small>긍정률</small></th>`).join('')}<th>평균<br><small>긍정률</small></th><th>소감</th></tr></thead><tbody>`
+      + RESULT.map(c=>`<tr><td class="pl">${esc(c.name)}</td><td>${c.n}</td>${c.counts.map(r=>`<td>${fmtP(posRate(r))}</td>`).join('')}<td class="pp">${fmtP(avgPos(c))}</td><td>${c.comments.length}</td></tr>`).join('')
+      + `<tr class="ptot"><td class="pl">전체</td><td>${d.n}</td>${d.counts.map(r=>`<td>${fmtP(posRate(r))}</td>`).join('')}<td class="pp">${fmtP(avg)}</td><td>${d.comments.length}</td></tr></tbody></table>`;
+  }else{
+    extra=`<h3>응원 한마디 · 참관 소감 <small>${d.comments.length}건</small></h3>`
+      + (d.comments.length?`<ol class="pcm">${d.comments.map((m,i)=>`<li><b>${i+1}</b><span>${esc(m.t)}</span><p>${esc(m.text)}</p></li>`).join('')}</ol>`:'<p class="pempty">작성된 의견 없음</p>');
+  }
+  return `<section class="pg"><header class="ph"><div><div class="pk">목포백련유치원 · 2026년 유아중심 방과후 특색 프로그램 활성화 사업</div><h2>보호자 인식조사 결과<em>${isTotal?'전체':esc(d.name)}</em></h2></div><div class="pd">${st.date} ${st.time} 기준</div></header>`
+    + `<div class="pkpi"><div><span>응답</span><b>${d.n}<small>명</small></b></div><div><span>평균 긍정률</span><b>${avg==null?'-':avg+'<small>%</small>'}</b></div><div><span>소감</span><b>${d.comments.length}<small>건</small></b></div></div>`
+    + `<h3>문항별 응답</h3><table class="ptab"><thead><tr><th colspan="2">문항</th>${SCALE.map((t,i)=>`<th>${MARK[i]}<br><small>${t}</small></th>`).join('')}<th>계</th><th>긍정률</th></tr></thead><tbody>${rows}</tbody></table>`
+    + `<div class="plg">${SCALE.map((t,i)=>`<span><i style="background:${SCALE_COLORS[i]}"></i>${MARK[i]} ${t}</span>`).join('')}<span class="pnote">긍정률 = (① + ②) ÷ 응답수</span></div>`
+    + extra + `<footer class="pf">목포백련유치원 방과후과정</footer></section>`;
+}
+function buildPrint(){ const st=stamp(); $('printArea').innerHTML=pageHTML(totalData(),true,st)+RESULT.map(c=>pageHTML(c,false,st)).join(''); return st; }
+
+let busy=false;
+function setBusy(v){ busy=v; ['btnPrint','btnPdf','btnXlsx'].forEach(id=>$(id).disabled=v); }
+
+$('btnPrint').onclick=()=>{
+  if(!RESULT||busy) return;
+  buildPrint();
+  setTimeout(()=>window.print(),80);
+};
+window.addEventListener('afterprint',()=>{ if(!busy) $('printArea').innerHTML=''; });
+
+$('btnPdf').onclick=async()=>{
+  if(!RESULT||busy) return;
+  setBusy(true); toast('PDF 생성 중');
+  try{
+    await Promise.all([loadLib('h2c'),loadLib('jspdf')]);
+    const st=buildPrint();
+    if(document.fonts&&document.fonts.ready) await document.fonts.ready;
+    const {jsPDF}=window.jspdf;
+    const pdf=new jsPDF({unit:'mm',format:'a4',orientation:'portrait'});
+    const pages=[...$('printArea').querySelectorAll('.pg')];
+    let first=true;
+    for(const pg of pages){
+      const cv=await html2canvas(pg,{scale:2,backgroundColor:'#ffffff',useCORS:true,logging:false});
+      const slice=Math.floor(cv.width*297/210);
+      for(let y=0;y<cv.height;y+=slice){
+        const h=Math.min(slice,cv.height-y);
+        const part=document.createElement('canvas'); part.width=cv.width; part.height=h;
+        const ctx=part.getContext('2d'); ctx.fillStyle='#fff'; ctx.fillRect(0,0,part.width,h);
+        ctx.drawImage(cv,0,y,cv.width,h,0,0,cv.width,h);
+        if(!first) pdf.addPage(); first=false;
+        pdf.addImage(part.toDataURL('image/jpeg',0.92),'JPEG',0,0,210,h*210/cv.width);
+      }
+    }
+    pdf.save(`목포백련유치원_보호자인식조사_${st.file}.pdf`);
+    toast('PDF 저장 완료');
+  }catch(e){ toast('PDF 저장 실패'); }
+  finally{ $('printArea').innerHTML=''; setBusy(false); }
+};
+
+$('btnXlsx').onclick=async()=>{
+  if(!RESULT||busy) return;
+  setBusy(true);
+  try{
+    await loadLib('xlsx');
+    const st=stamp(), tot=totalData(), wb=XLSX.utils.book_new();
+    const head=['번호','문항',...SCALE.map((t,i)=>`${MARK[i]} ${t}`),'응답수','긍정률(%)'];
+    const itemRows=d=>d.counts.map((r,q)=>[q+1,ITEMS[q],...r,sumRow(r),posRate(r)==null?'':posRate(r)]);
+    const cols=[{wch:6},{wch:62},...SCALE.map(()=>({wch:15})),{wch:8},{wch:10}];
+    const add=(name,aoa,c)=>{ const ws=XLSX.utils.aoa_to_sheet(aoa); ws['!cols']=c; XLSX.utils.book_append_sheet(wb,ws,name); };
+    const info=d=>[`응답 ${d.n}명`,`평균 긍정률 ${fmtP(avgPos(d))}`,`소감 ${d.comments.length}건`];
+
+    add('전체',[[`목포백련유치원 보호자 인식조사 결과 · 전체 (${st.date} ${st.time} 기준)`],info(tot),[],head,...itemRows(tot),[],[],
+      ['반','응답수',...[1,2,3,4,5].map(q=>`문항${q} 긍정률(%)`),'평균 긍정률(%)','소감'],
+      ...RESULT.map(c=>[c.name,c.n,...c.counts.map(r=>posRate(r)==null?'':posRate(r)),avgPos(c)==null?'':avgPos(c),c.comments.length]),
+      ['전체',tot.n,...tot.counts.map(r=>posRate(r)==null?'':posRate(r)),avgPos(tot)==null?'':avgPos(tot),tot.comments.length]],cols);
+
+    const cmp=[[`반별 비교 (${st.date} ${st.time} 기준)`]];
+    ITEMS.forEach((t,q)=>{
+      cmp.push([],[`문항${q+1}. ${t}`],['반',...SCALE.map((x,i)=>`${MARK[i]} ${x}`),'응답수','긍정률(%)']);
+      RESULT.forEach(c=>{ const r=c.counts[q]; cmp.push([c.name,...r,sumRow(r),posRate(r)==null?'':posRate(r)]); });
+      const r=tot.counts[q]; cmp.push(['전체',...r,sumRow(r),posRate(r)==null?'':posRate(r)]);
+    });
+    add('반별 비교',cmp,[{wch:16},...SCALE.map(()=>({wch:15})),{wch:8},{wch:10}]);
+
+    RESULT.forEach(c=>{
+      add(c.name.slice(0,31),[[`${c.name} 결과 (${st.date} ${st.time} 기준)`],info(c),[],head,...itemRows(c),[],['번호','응원 한마디 · 참관 소감','작성 시각'],...c.comments.map((m,i)=>[i+1,m.text,m.t])],cols);
+    });
+    add('소감 전체',[['반','작성 시각','내용'],...tot.comments.map(m=>[m.cls,m.t,m.text])],[{wch:16},{wch:12},{wch:90}]);
+
+    XLSX.writeFile(wb,`목포백련유치원_보호자인식조사_${st.file}.xlsx`);
+    toast('엑셀 저장 완료');
+  }catch(e){ toast('엑셀 저장 실패'); }
+  finally{ setBusy(false); }
 };
 
 function renderQR(){
