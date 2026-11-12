@@ -262,6 +262,7 @@ textarea:focus{border-color:var(--blue);background:var(--surface)}
 #printArea .plg .pnote{margin-left:auto}
 #printArea .pcm{margin:0;padding:0;list-style:none;font-size:12px;line-height:1.6}
 #printArea .pcm li{display:flex;gap:10px;padding:5px 0;border-bottom:1px dashed #d8deea;white-space:pre-wrap}
+#printArea .pcm li{break-inside:avoid;page-break-inside:avoid}
 #printArea .pcm li b{flex:none;width:18px;color:var(--navy);font-variant-numeric:tabular-nums}
 #printArea .pcm li p{margin:0;flex:1;min-width:0}
 #printArea .pcm li span{flex:none;color:var(--sub);font-size:10.5px;padding-top:1px;font-variant-numeric:tabular-nums}
@@ -864,6 +865,28 @@ function pageHTML(d,isTotal,st){
     + `<div class="plg">${SCALE.map((t,i)=>`<span><i style="background:${SCALE_COLORS[i]}"></i>${MARK[i]} ${t}</span>`).join('')}<span class="pnote">긍정률 = (① + ②) ÷ 응답수</span></div>`
     + extra + `<footer class="pf">목포백련유치원 방과후과정</footer></section>`;
 }
+/* PDF용: 한 쪽(A4)을 넘는 소감 목록을 다음 쪽으로 나눔 */
+const PAGE_H=1123;
+function paginate(){
+  [...$('printArea').querySelectorAll('.pg')].forEach(pg=>{
+    let cur=pg;
+    while(cur.offsetHeight>PAGE_H){
+      const list=cur.querySelector('.pcm');
+      if(!list||list.children.length<=1) break;
+      const next=document.createElement('section'); next.className='pg';
+      const head=pg.querySelector('.ph').cloneNode(true);
+      const em=head.querySelector('h2 em'); if(em) em.textContent=em.textContent.replace(/ \(계속\)$/,'')+' (계속)';
+      next.appendChild(head);
+      const h3=document.createElement('h3'); h3.innerHTML='응원 한마디 · 참관 소감 <small>계속</small>'; next.appendChild(h3);
+      const nl=document.createElement('ol'); nl.className='pcm'; next.appendChild(nl);
+      next.appendChild(pg.querySelector('.pf').cloneNode(true));
+      cur.after(next);
+      while(cur.offsetHeight>PAGE_H && list.children.length>1) nl.prepend(list.lastElementChild);
+      cur=next;
+    }
+    if(cur.offsetHeight>PAGE_H){ const f=cur.querySelector('.pf'); if(f) f.remove(); }
+  });
+}
 function buildPrint(){ const st=stamp(); $('printArea').innerHTML=pageHTML(totalData(),true,st)+RESULT.map(c=>pageHTML(c,false,st)).join(''); return st; }
 
 let busy=false;
@@ -883,6 +906,7 @@ $('btnPdf').onclick=async()=>{
     await Promise.all([loadLib('h2c'),loadLib('jspdf')]);
     const st=buildPrint();
     if(document.fonts&&document.fonts.ready) await document.fonts.ready;
+    paginate();
     const {jsPDF}=window.jspdf;
     const pdf=new jsPDF({unit:'mm',format:'a4',orientation:'portrait'});
     const pages=[...$('printArea').querySelectorAll('.pg')];
@@ -892,6 +916,7 @@ $('btnPdf').onclick=async()=>{
       const slice=Math.floor(cv.width*297/210);
       for(let y=0;y<cv.height;y+=slice){
         const h=Math.min(slice,cv.height-y);
+        if(y>0 && h<120) break;
         const part=document.createElement('canvas'); part.width=cv.width; part.height=h;
         const ctx=part.getContext('2d'); ctx.fillStyle='#fff'; ctx.fillRect(0,0,part.width,h);
         ctx.drawImage(cv,0,y,cv.width,h,0,0,cv.width,h);
